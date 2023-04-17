@@ -1,26 +1,17 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-//const { Node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
 /**
 * Implement simple binary search tree according to task description
 * using Node from extensions
 */
 
-class BinaryNode {
-  data = null
-  left = null
-  right = null
-  constructor(data) {
-    this.data = data
-  }
-}
-
 class BinarySearchTree {
   #rootNode = null
 
   #addNewNode(node, data) {
-    if (!node) return new BinaryNode(data)
+    if (!node) return new Node(data)
     if (data === node.data) return node
     if (data > node.data) node.right = this.#addNewNode(node.right, data)
     else node.left = this.#addNewNode(node.left, data)
@@ -67,13 +58,13 @@ class BinarySearchTree {
         return null
       }
 
-      if (!node.left && node.right) {
-        node = node.left
+      if (!node.left) {
+        node = node.right
         return node
       }
 
-      if (!node.right && node.left) {
-        node = node.right
+      if (!node.right) {
+        node = node.left
         return node
       }
 
@@ -102,11 +93,11 @@ class BinarySearchTree {
   }
 
   min() {
-    return this.#goLeft(this.#rootNode)
+    return this.#goLeft(this.#rootNode).data
   }
 
   max() {
-    return this.#goRight(this.#rootNode)
+    return this.#goRight(this.#rootNode).data
   }
 
   remove(data) {
